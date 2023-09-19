@@ -11,7 +11,7 @@ import { readdirSync } from 'fs';
 import { Server } from 'socket.io';
 const INCOMING = './socket_in';
 export class Plugboard {
-    constructor() {
+    constructor(opts) {
         this.commands = readdirSync(INCOMING).map(i => i.replace('js', ''));
         const collectingCmds = {};
         for (let cmd of this.commands) {
@@ -24,7 +24,7 @@ export class Plugboard {
             }).catch(e => console.log(e));
         }
         this.eventsCollected = collectingCmds;
-        this.io = new Server({ cors: { origin: "*" } });
+        this.io = new Server(opts);
         this.io.on('connection', socket => {
             for (let cmd of this.commands) {
                 if (!this.eventsCollected[cmd])
