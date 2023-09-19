@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 import { Socket, Server, ServerOptions } from 'socket.io';
 
-const INCOMING = './socket_in';
+const INCOMING = 'socket_in';
 
 export class Plugboard {
     io: Server;

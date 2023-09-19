@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { readdirSync } from 'fs';
 import { Server } from 'socket.io';
-const INCOMING = './socket_in';
+const INCOMING = 'socket_in';
 export class Plugboard {
     constructor(opts) {
         this.commands = readdirSync(INCOMING).map(i => i.replace('js', ''));
