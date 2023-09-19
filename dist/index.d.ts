@@ -4,6 +4,7 @@ export declare class Plugboard {
     commands: string[];
     private eventsCollected;
     constructor(opts?: Partial<ServerOptions> | undefined);
+    start(port: number, cb: CallableFunction): void;
 }
 export declare class ASocket<Args extends any[]> {
     socket?: Socket;

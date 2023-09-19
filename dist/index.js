@@ -37,6 +37,10 @@ export class Plugboard {
             }
         });
     }
+    start(port, cb) {
+        this.io.listen(port);
+        cb();
+    }
 }
 export class ASocket {
     init(s, io, args) {
