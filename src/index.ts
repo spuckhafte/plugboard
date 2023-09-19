@@ -1,20 +1,21 @@
 import { readdirSync } from 'fs';
 import { Socket, Server, ServerOptions } from 'socket.io';
 
-const INCOMING = 'socket_in';
-
 export class Plugboard {
+    socketFolder: string;
     io: Server;
-    commands = readdirSync(INCOMING).map(i => i.replace('js', ''));
+    commands: string[];
     private eventsCollected: {
         [index: string]: ASocket<[]>
     }
 
-    constructor(opts?: Partial<ServerOptions> | undefined) {
+    constructor(socketFolder: string, opts?: Partial<ServerOptions> | undefined) {
+        this.socketFolder = socketFolder;
+        this.commands = readdirSync(socketFolder).map(i => i.replace('js', ''));
 
         const collectingCmds: { [index: string]: ASocket<[]> } = {};
         for (let cmd of this.commands) {
-            const cmdPath = `file://${process.cwd()}/${INCOMING}/${cmd}.js`;
+            const cmdPath = `file://${process.cwd()}/${socketFolder}/${cmd}.js`;
             import(cmdPath).then(theCommand => {
                 if (theCommand.default) {
                     const event: ASocket<[]> = new theCommand.default();

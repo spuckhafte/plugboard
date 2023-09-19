@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { readdirSync } from 'fs';
 import { Server } from 'socket.io';
-const INCOMING = 'socket_in';
 export class Plugboard {
-    constructor(opts) {
-        this.commands = readdirSync(INCOMING).map(i => i.replace('js', ''));
+    constructor(socketFolder, opts) {
+        this.socketFolder = socketFolder;
+        this.commands = readdirSync(socketFolder).map(i => i.replace('js', ''));
         const collectingCmds = {};
         for (let cmd of this.commands) {
-            const cmdPath = `file://${process.cwd()}/${INCOMING}/${cmd}.js`;
+            const cmdPath = `file://${process.cwd()}/${socketFolder}/${cmd}.js`;
             import(cmdPath).then(theCommand => {
                 if (theCommand.default) {
                     const event = new theCommand.default();

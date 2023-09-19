@@ -1,9 +1,10 @@
 import { Socket, Server, ServerOptions } from 'socket.io';
 export declare class Plugboard {
+    socketFolder: string;
     io: Server;
     commands: string[];
     private eventsCollected;
-    constructor(opts?: Partial<ServerOptions> | undefined);
+    constructor(socketFolder: string, opts?: Partial<ServerOptions> | undefined);
     start(port: number, cb: CallableFunction): void;
 }
 export declare class ASocket<Args extends any[]> {
