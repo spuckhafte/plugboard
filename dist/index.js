@@ -12,7 +12,7 @@ import { Server } from 'socket.io';
 export class Plugboard {
     constructor(socketFolder, opts) {
         this.socketFolder = socketFolder;
-        this.commands = readdirSync(socketFolder).map(i => i.replace('js', ''));
+        this.commands = readdirSync(socketFolder).map(i => i.replace('.js', ''));
         const collectingCmds = {};
         for (let cmd of this.commands) {
             const cmdPath = `file://${process.cwd()}/${socketFolder}/${cmd}.js`;

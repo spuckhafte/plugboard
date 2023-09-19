@@ -11,7 +11,7 @@ export class Plugboard {
 
     constructor(socketFolder: string, opts?: Partial<ServerOptions> | undefined) {
         this.socketFolder = socketFolder;
-        this.commands = readdirSync(socketFolder).map(i => i.replace('js', ''));
+        this.commands = readdirSync(socketFolder).map(i => i.replace('.js', ''));
 
         const collectingCmds: { [index: string]: ASocket<[]> } = {};
         for (let cmd of this.commands) {
