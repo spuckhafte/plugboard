@@ -5,6 +5,7 @@ export class Plugboard {
     socketFolder: string;
     io: Server;
     commands: string[];
+    onConnection: ((socket: Socket, io: Server) => void) | null = null;
     private eventsCollected: {
         [index: string]: ASocket<[]>
     }
@@ -28,6 +29,9 @@ export class Plugboard {
         this.io = new Server(opts);
 
         this.io.on('connection', socket => {
+            if (this.onConnection) 
+                this.onConnection(socket, this.io);
+            
             for (let cmd of this.commands) {
                 if (!this.eventsCollected[cmd]) continue;
 

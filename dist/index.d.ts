@@ -3,6 +3,7 @@ export declare class Plugboard {
     socketFolder: string;
     io: Server;
     commands: string[];
+    onConnection: ((socket: Socket, io: Server) => void) | null;
     private eventsCollected;
     constructor(socketFolder: string, opts?: Partial<ServerOptions> | undefined);
     start(port: number, cb: CallableFunction): void;

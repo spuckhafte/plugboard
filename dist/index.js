@@ -11,6 +11,7 @@ import { readdirSync } from 'fs';
 import { Server } from 'socket.io';
 export class Plugboard {
     constructor(socketFolder, opts) {
+        this.onConnection = null;
         this.socketFolder = socketFolder;
         this.commands = readdirSync(socketFolder).map(i => i.replace('.js', ''));
         const collectingCmds = {};
@@ -26,6 +27,8 @@ export class Plugboard {
         this.eventsCollected = collectingCmds;
         this.io = new Server(opts);
         this.io.on('connection', socket => {
+            if (this.onConnection)
+                this.onConnection(socket, this.io);
             for (let cmd of this.commands) {
                 if (!this.eventsCollected[cmd])
                     continue;
