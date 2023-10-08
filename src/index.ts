@@ -44,9 +44,9 @@ export class Plugboard {
         });
     }
 
-    start(port: number, cb: CallableFunction) {
+    start(port: number, cb?: CallableFunction) {
         this.io.listen(port);
-        cb();
+        if (cb) cb();
     }
 }
 
